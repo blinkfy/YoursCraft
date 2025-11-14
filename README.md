@@ -1,7 +1,7 @@
 # YoursCraft
 A game based on Minecraft and developed using OpenGL.
 <br>
-一个基于 OpenGL 的体素 (voxel) 游戏
+一个基于 OpenGL 的体素游戏
 
 > This project uses Minecraft texture resources (not included in this repository), which need to be available for download from the official website, for personal learning only, and commercial use is prohibited.
 > <br>
