@@ -65,7 +65,7 @@ A game based on Minecraft and developed using OpenGL.
 
 ## 安装与运行
 #### 使用Windows安装包
-下载运行release/OpenGLSetup1.msi，由于没有许可证安装过程中Windows Defender可能会阻止安装，选择“更多信息”->“仍要运行”即可。
+下载运行[release/OpenGLSetup1.msi](https://blinkfy.github.io/YoursCraft/Release/yourscraft)，由于没有许可证安装过程中Windows Defender可能会阻止安装，选择“更多信息”->“仍要运行”即可。
 #### 自行编译项目
 1. 安装依赖（GLFW、GLAD、GLM、SOIL）并确保头文件与库路径正确
 2. 使用 Visual Studio 打开工程文件（.vcxproj），或使用 CMake 生成构建工程
