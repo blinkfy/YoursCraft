@@ -76,4 +76,4 @@ A game based on Minecraft and developed using OpenGL.
 
 - `src/`：（`main.cpp`, `World.cpp`, `Chunk.cpp`, `Texture.cpp`, `Simulation.cpp`, `Camera.cpp`, `Shader.cpp` 等）
 - `include/`：（`Common.h`, `Chunk.h`, `World.h`, `Texture.h`, `Shader.h`, `Simulation.h`）
-- `minecraft_textures/`：请到 Minecraft 官网下载Java版贴图资源，版权归 Mojang/Microsoft 所有
+- `minecraft_textures/`：请到 [Minecraft 官网](https://aka.ms/minecraftClientGameCoreWindows)下载Java版贴图资源，版权归 Mojang/Microsoft 所有
