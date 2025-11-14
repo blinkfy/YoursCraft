@@ -12,6 +12,7 @@ A game based on Minecraft and developed using OpenGL.
 `Yourcraft` is a Minecraft style voxel rendering and interactive demonstration game based on OpenGL 3.3 Shader implementation. Mainly used for course assignments, including terrain generation, meshing, multi-threaded block generation, asynchronous texture loading, simple water simulation, and sphere physics.
 <br>
 `Yourscraft` 是一个 Minecraft 风格体素渲染与交互演示游戏，基于 OpenGL 3.3 Shader 实现。主要用于课程作业，包括地形生成、网格合并 (meshing)、多线程区块生成、异步纹理加载、简单水模拟与球体物理等功能。
+<br>
 <img src="./Release/bg.jpg" width="400" alt="mainpage" align="center">
 ## Functions / 功能
 
