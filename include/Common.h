@@ -37,7 +37,7 @@ constexpr float STEP_HEIGHT=1.0f;
 constexpr float STEP_DURATION=0.30f;
 constexpr float STEPPING_SPEED_MULT=0.6f;
 
-constexpr int WATER_LEVEL=25;
+constexpr int WATER_LEVEL=22;
 constexpr int BASE_HEIGHT=30;
 constexpr float CONTINENT_SCALE=0.008f;
 constexpr float TERRAIN_SCALE=0.03f;
@@ -49,7 +49,7 @@ constexpr int MIN_TERRAIN_HEIGHT=10;
 
 constexpr float RIVER_FREQ=0.015f;
 constexpr float RIVER_WIDTH=0.12f;
-constexpr int RIVER_DEPTH=8;
+constexpr int RIVER_DEPTH=10;
 
 //Œ∆¿Ì
 constexpr int NUM_BLOCK_TEXTURES=9;//GRASS_TOP,DIRT,STONE,WOOD,LEAVES,SAND,WATER,GRASS_SIDE,CLOUD
