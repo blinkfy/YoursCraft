@@ -115,13 +115,17 @@ void Chunk::generateTerrain() {
             if(riverBand<RIVER_WIDTH) {
                 float t=1.0f-(riverBand/RIVER_WIDTH);
                 int carve=static_cast<int>(std::round(t*RIVER_DEPTH));
-                terrainHeight=std::max(WATER_LEVEL-3,terrainHeight-carve);
+                if(terrainHeight-carve>WATER_LEVEL-5)
+                    terrainHeight=std::max(WATER_LEVEL,terrainHeight-carve);
+				else terrainHeight =  terrainHeight - carve;
             }
             heightMap[cx][cz]=terrainHeight;
         }
     }
 
     //第二遍：根据高度图与生物群系垂直填充方块
+	int WATERH = WATER_LEVEL-1;
+    BlockType blocksCache[CHUNK_SIZE][CHUNK_SIZE],blocksCache2[CHUNK_SIZE][CHUNK_SIZE];
     for(int cx=0;cx<CHUNK_SIZE;++cx) {
         for(int cz=0;cz<CHUNK_SIZE;++cz) {
             float worldX=static_cast<float>(chunkX*CHUNK_SIZE+cx);
@@ -155,11 +159,73 @@ void Chunk::generateTerrain() {
             }
 
             //若地形低于水面，则填充水直到水位
-            if(terrainHeight<WATER_LEVEL) {
-                for(int y=terrainHeight;y<WATER_LEVEL && y<CHUNK_HEIGHT;++y) {
-                    blocks[cx][y][cz]=WATER;
+            if (terrainHeight < WATER_LEVEL) {
+                for (int y = terrainHeight; y < WATER_LEVEL && y < CHUNK_HEIGHT; ++y) {
+                    blocks[cx][y][cz] = WATER;
+                }
+                blocksCache[cx][cz] = WATER;
+            }else{
+                blocksCache[cx][cz]=blocks[cx][WATERH][cz];
+            }
+        }
+    }
+
+    //河流侵蚀与沉积
+    int dx[8]={-1,-1,-1,0,0,1,1,1};
+    int dz[8]={-1,0,1,-1,1,-1,0,1};
+    memcpy(blocksCache2, blocksCache, sizeof(blocksCache));
+    for(int cx=0;cx<CHUNK_SIZE;++cx) {
+        for(int cz=0;cz<CHUNK_SIZE;++cz) {
+            if (blocksCache2[cx][cz]!=WATER) {
+                for(int dir=0;dir<8;++dir) {
+                    int nx=cx+dx[dir];
+                    int nz=cz+dz[dir];
+                    if(nx>=0&&nx<CHUNK_SIZE&&nz>=0&&nz<CHUNK_SIZE&&blocksCache[nx][nz]==WATER) {
+						blocksCache2[cx][cz]=WATER;
+						break;
+                    }
+				}
+            }
+        }
+    }
+    for(int cx=0;cx<CHUNK_SIZE;++cx) {
+        for(int cz=0;cz<CHUNK_SIZE;++cz) {
+            if(blocksCache[cx][cz]==WATER){
+                for(int dir=0;dir<8;++dir) {
+                    int nx=cx+dx[dir];
+                    int nz=cz+dz[dir];
+                    if(nx>=0&&nx<CHUNK_SIZE&&nz>=0&&nz<CHUNK_SIZE&&blocksCache2[nx][nz]!=WATER) {
+                        blocksCache[cx][cz]=blocks[nx][WATERH][nz];
+						break;
+                    }
                 }
             }
+        }
+    }
+    for(int cx=0;cx<CHUNK_SIZE;++cx) {
+        for(int cz=0;cz<CHUNK_SIZE;++cz) {
+            if(blocksCache[cx][cz]!=WATER) {
+                if(cx-1>= 0)blocksCache2[cx-1][cz]=SAND;
+                if(cx+1<CHUNK_SIZE)blocksCache2[cx+1][cz]=SAND;
+                if(cz-1>=0)blocksCache2[cx][cz-1]=SAND;
+                if(cz+1<CHUNK_SIZE)blocksCache2[cx][cz+1]=SAND;
+            }
+        }
+    }
+    memcpy(blocksCache, blocksCache2, sizeof(blocksCache));
+    for(int cx=0;cx<CHUNK_SIZE;++cx) {
+        for(int cz=0;cz<CHUNK_SIZE;++cz) {
+            if(blocksCache2[cx][cz]==WATER) {
+                if(cx-1>= 0)blocksCache[cx-1][cz]=WATER;
+                if(cx+1<CHUNK_SIZE)blocksCache[cx+1][cz]=WATER;
+                if(cz-1 >=0)blocksCache[cx][cz-1]=WATER;
+                if(cz+1<CHUNK_SIZE)blocksCache[cx][cz+1]=WATER;
+            }
+        }
+    }
+    for(int cx=0; cx<CHUNK_SIZE; ++cx) {
+        for(int cz=0; cz<CHUNK_SIZE; ++cz) {
+			blocks[cx][WATERH][cz]=blocksCache[cx][cz];
         }
     }
 
